@@ -1,0 +1,120 @@
+{"objects":{"object":[ {
+  "type" : "as-set",
+  "link" : {
+    "type" : "locator",
+    "href" : "https://rest.db.ripe.net/ripe/as-set/AS-DDOS-GUARD-WHISKEY-CLIENTS"
+  },
+  "source" : {
+    "id" : "ripe"
+  },
+  "attributes" : {
+    "attribute" : [ {
+      "name" : "as-set",
+      "value" : "AS-DDOS-GUARD-WHISKEY-CLIENTS"
+    }, {
+      "name" : "created",
+      "value" : "2021-03-24T13:42:05Z"
+    }, {
+      "name" : "source",
+      "value" : "RIPE"
+    }, {
+      "link" : {
+        "type" : "locator",
+        "href" : "https://rest.db.ripe.net/ripe/person/DS19051-RIPE"
+      },
+      "name" : "tech-c",
+      "value" : "DS19051-RIPE",
+      "referenced-type" : "person"
+    }, {
+      "link" : {
+        "type" : "locator",
+        "href" : "https://rest.db.ripe.net/ripe/person/DS19051-RIPE"
+      },
+      "name" : "admin-c",
+      "value" : "DS19051-RIPE",
+      "referenced-type" : "person"
+    }, {
+      "link" : {
+        "type" : "locator",
+        "href" : "https://rest.db.ripe.net/ripe/mntner/DDOS-GUARD-FOR-WHISKEY-MNT"
+      },
+      "name" : "mnt-by",
+      "value" : "DDOS-GUARD-FOR-WHISKEY-MNT",
+      "referenced-type" : "mntner"
+    }, {
+      "link" : {
+        "type" : "locator",
+        "href" : "https://rest.db.ripe.net/ripe/mntner/DDOS-GUARD-MNT"
+      },
+      "name" : "mnt-by",
+      "value" : "DDOS-GUARD-MNT",
+      "referenced-type" : "mntner"
+    }, {
+      "link" : {
+        "type" : "locator",
+        "href" : "https://rest.db.ripe.net/ripe/mntner/DDOS-GUARD-MNT3"
+      },
+      "name" : "mnt-by",
+      "value" : "DDOS-GUARD-MNT3",
+      "referenced-type" : "mntner"
+    }, {
+      "link" : {
+        "type" : "locator",
+        "href" : "https://rest.db.ripe.net/ripe/mntner/DDOS-GUARD4-MNT"
+      },
+      "name" : "mnt-by",
+      "value" : "DDOS-GUARD4-MNT",
+      "referenced-type" : "mntner"
+    }, {
+      "link" : {
+        "type" : "locator",
+        "href" : "https://rest.db.ripe.net/ripe/as-set/AS-TEST"
+      },
+      "name" : "members",
+      "value" : "AS-TEST",
+      "referenced-type" : "as-set"
+    }, {
+      "link" : {
+        "type" : "locator",
+        "href" : "https://rest.db.ripe.net/ripe/as-set/AS-TEST2"
+      },
+      "name" : "members",
+      "value" : "AS-TEST2",
+      "referenced-type" : "as-set"
+    }, {
+      "link" : {
+        "type" : "locator",
+        "href" : "https://rest.db.ripe.net/ripe/as-set/AS-TEST3"
+      },
+      "name" : "members",
+      "value" : "AS-TEST3",
+      "referenced-type" : "as-set"
+    }, {
+      "link" : {
+        "type" : "locator",
+        "href" : "https://rest.db.ripe.net/ripe/as-set/AS-TEST4"
+      },
+      "name" : "members",
+      "value" : "AS-TEST4",
+      "referenced-type" : "as-set"
+    }, {
+      "link" : {
+        "type" : "locator",
+        "href" : "https://rest.db.ripe.net/ripe/as-set/AS-TEST6"
+      },
+      "name" : "members",
+      "value" : "AS-TEST6",
+      "referenced-type" : "as-set"
+    }, {
+      "link" : {
+        "type" : "locator",
+        "href" : "https://rest.db.ripe.net/ripe/aut-num/AS12345"
+      },
+      "name" : "members",
+      "value" : "AS12345",
+      "referenced-type" : "aut-num"
+    } ,{"link":{"href":"https://rest.db.ripe.net/ripe/aut-num/AS-TEST7","type":"locator"},"name":"members","referenced-type":"aut-num","value":"AS-TEST7"}]
+  }
+} ]
+}
+}
