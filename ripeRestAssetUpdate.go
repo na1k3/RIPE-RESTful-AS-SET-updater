@@ -10,11 +10,12 @@ import (
 	"os"
 	"strconv"
 
+	"github.com/howeyc/gopass"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
 )
 
-func getFromRipe(adddelete, ASorASSET, password, assetname string) (err error, RipeErrorSeverityString, RipeErrorMesageString string) {
+func getFromRipe(adddelete, ASorASSETtoAddOrDelete, password, assetname string) (err error, RipeErrorSeverityString, RipeErrorMesageString string) {
 	var (
 		ver3, ver4     string
 		resp, resp1    *http.Response
@@ -50,7 +51,7 @@ func getFromRipe(adddelete, ASorASSET, password, assetname string) (err error, R
 			values := gjson.Get(ver3, "objects.object.0.attributes.attribute.#.value")
 			i = 0
 			for _, name := range values.Array() {
-				if name.String() == ASorASSET {
+				if name.String() == ASorASSETtoAddOrDelete {
 					ver4, _ = sjson.Delete(ver3, "objects.object.0.attributes.attribute."+strconv.Itoa(i))
 				}
 				i++
@@ -59,22 +60,31 @@ func getFromRipe(adddelete, ASorASSET, password, assetname string) (err error, R
 				err = errors.New("No matches to delete!")
 				return err, RipeErrorSeverityString, RipeErrorMesageString
 			} else {
-				//fmt.Println(ver4)//for debug
 				PutRequestBody = bytes.NewReader([]byte(ver4))
 			}
 
 		case "add":
-			QWE := map[string]string{"href": "https://rest.db.ripe.net/ripe/aut-num/" + ASorASSET, "type": "locator"}
-			value, _ := sjson.Set(ver3, "objects.object.0.attributes.attribute.-1", map[string]interface{}{"link": QWE, "name": "members", "value": ASorASSET, "referenced-type": "aut-num"})
 
-			//fmt.Println(value)//for debug
+			values := gjson.Get(ver3, "objects.object.0.attributes.attribute.#.value")
+			i = 0
+			for _, name := range values.Array() {
+				if name.String() == ASorASSETtoAddOrDelete {
+					err = errors.New("Object " + ASorASSETtoAddOrDelete + "already exists!")
+					return err, RipeErrorSeverityString, RipeErrorMesageString
+				}
+				i++
+			}
+
+			QWE := map[string]string{"href": "https://rest.db.ripe.net/ripe/aut-num/" + ASorASSETtoAddOrDelete, "type": "locator"}
+
+			value, _ := sjson.Set(ver3, "objects.object.0.attributes.attribute.-1", map[string]interface{}{"link": QWE, "name": "members", "value": ASorASSETtoAddOrDelete, "referenced-type": "aut-num"})
+
 			PutRequestBody = bytes.NewReader([]byte(value))
 
 		}
 	}
 
 	if err == nil {
-		//PutRequestBody = bytes.NewReader([]byte{1}) //TEST ERROR
 
 		request1 := "https://rest.db.ripe.net/ripe/as-set/" + assetname + "?password=" + password
 		req1, _ := http.NewRequest("PUT", request1, PutRequestBody)
@@ -82,12 +92,10 @@ func getFromRipe(adddelete, ASorASSET, password, assetname string) (err error, R
 		req1.Header.Add("Accept", "application/json")
 		resp1, err = client.Do(req1)
 		body, _ := ioutil.ReadAll(resp1.Body)
-		// fmt.Println(string(body))  //for debug
 		defer resp1.Body.Close()
 
 		RipeErrors := gjson.Get(string(body), "errormessages")
 		if RipeErrors.Exists() {
-			//fmt.Println(RipeErrors.String()) //for debug
 			RipeErrorSeverity := gjson.Get(RipeErrors.String(), "errormessage.0.severity")
 			RipeErrorMesage := gjson.Get(RipeErrors.String(), "errormessage.0.args.0.value")
 			RipeErrorSeverityString = RipeErrorSeverity.String()
@@ -101,11 +109,12 @@ func getFromRipe(adddelete, ASorASSET, password, assetname string) (err error, R
 
 func main() {
 
-	if len(os.Args) < 4 {
-		fmt.Println("USAGE:  " + os.Args[0] + " add/delete AS/AS-SET password as-set-name")
+	if len(os.Args) < 3 {
+		fmt.Println("USAGE:  " + os.Args[0] + " add/delete AS/AS-SET as-set-name")
 	} else {
-
-		err, RipeError, RipeErrorMess := getFromRipe(os.Args[1], os.Args[2], os.Args[3], os.Args[4])
+		fmt.Printf("Password: ")
+		pass, _ := gopass.GetPasswd()
+		err, RipeError, RipeErrorMess := getFromRipe(os.Args[1], os.Args[2], string(pass), os.Args[3])
 
 		if err != nil {
 			fmt.Printf("-----------------\n\n %s", err.Error())
